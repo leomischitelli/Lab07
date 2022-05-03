@@ -1,0 +1,39 @@
+Parto da un NERC, numero massimo di X anni, numero massimo di Y ore di disservizio
+Scelgo NERC dalla combobox
+
+WORST-CASE:
+RISULTATO: collezione di PowerOutage con max demandLoss
+Per ogni PowerOutage:
+-cerco la durata in ORE facendo (date_event_began - finished) (ChronoUnit.HOURS.BETWEEN)
+-mi assicuro che le ore totali siano <= Y
+-mi assicuro che (annoRecente - annoVecchio) <= X
+-lo aggiungo e proseguo
+-backtracking
+
+
+livello = numero ore?
+soluzione parziale = (collezione, ore, annoRecente, annoVecchio)
+
+A: termina quando ore = Y oppure quando ho scandito tutto il db
+(nella query ordino il db per date began, inizio dal primo anno)
+
+faccio query a gruppi di gap, parto da 2000 - (2000+X) e incremento uno ad uno fino a raggiungere 2014
+
+
+
+long minutes = ChronoUnit.MINUTES.between(fromDate, toDate);
+long hours = ChronoUnit.HOURS.between(fromDate, toDate);
+
+SELECT id, date_event_began, date_event_finished, demand_loss
+FROM poweroutages
+WHERE YEAR(date_event_began) >= ?
+AND YEAR(date_event_finished) <= ?
+AND nerc_id = ?
+
+
+
+
+2002 - 2004 (gap 5)
+2005 ok  (annoAttuale - annoMin) <= maxAnni && (annoMax - annoAttuale) <= maxAnni
+
+2000 ok 
