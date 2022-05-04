@@ -8,6 +8,7 @@ import com.zaxxer.hikari.HikariDataSource;
 
 
 
+
 /**
  * Utility class for connecting to the database
  * 
@@ -25,7 +26,6 @@ public class ConnectDB {
 			config.setJdbcUrl(jdbcURL);
 			config.setUsername("root");
 			config.setPassword("root");
-			
 			config.addDataSourceProperty("cachePrepStmts", true);
 			config.addDataSourceProperty("prepStmtChacheSize", 250);
 			config.addDataSourceProperty("prepStmtCacheSqlLimit", "2048");
@@ -41,6 +41,8 @@ public class ConnectDB {
 			throw new RuntimeException(e);
 		}
 	}
+
+
 
 	
 
