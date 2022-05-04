@@ -10,6 +10,7 @@ import java.sql.Timestamp;
 
 import it.polito.tdp.poweroutages.model.Nerc;
 import it.polito.tdp.poweroutages.model.PowerOutage;
+import it.polito.tdp.poweroutages.model.Rilevamento;
 
 public class PowerOutageDAO {
 	
@@ -74,33 +75,28 @@ public class PowerOutageDAO {
 		
 	}
 	
-	public List<PowerOutage> getPowerOutagesNerc(Nerc nerc) {
-		// TODO Auto-generated method stub
-		String sql = "SELECT * "
+	public List<Rilevamento> getRilevamentiNerc(Nerc nerc) {
+		String sql ="SELECT customers_affected, date_event_began, date_event_finished, HOUR(TIMEDIFF(date_event_began, date_event_finished)) AS diff "
 				+ "FROM poweroutages "
-				+ "WHERE nerc_id = ? ";
+				+ "WHERE nerc_id=?";
+		List<Rilevamento> rilevamenti = new ArrayList<Rilevamento>();
 		Connection conn = ConnectDB.getConnection();
 		try {
 			PreparedStatement st = conn.prepareStatement(sql);
 			st.setInt(1, nerc.getId());
 			ResultSet rs = st.executeQuery();
-			List<PowerOutage> output = new ArrayList<PowerOutage>();
-			while(rs.next()) {
-				PowerOutage po = new PowerOutage(rs.getInt("id"), rs.getInt("event_type_id"), rs.getInt("tag_id"), rs.getInt("area_id"), nerc, 
-						rs.getInt("responsible_id"), rs.getInt("customers_affected"), rs.getTimestamp("date_event_began").toLocalDateTime(), 
-						rs.getTimestamp("date_event_finished").toLocalDateTime(), rs.getInt("demand_loss"));
-				output.add(po);
-				
+			while(rs.next())
+			{
+				Rilevamento r = new Rilevamento(rs.getInt("customers_affected"), rs.getDate("date_event_began"), 
+						rs.getDate("date_event_finished"), rs.getInt("diff"));
+				rilevamenti.add(r);
 			}
-			st.close();
-			rs.close();
 			conn.close();
-			return output;
-
+			return rilevamenti;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-			throw new RuntimeException(e);
+			return null;
 		}
 	
 	
