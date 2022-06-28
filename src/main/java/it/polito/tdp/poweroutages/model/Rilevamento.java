@@ -6,14 +6,16 @@ public class Rilevamento {
 	private int utenti;
 	private Date dataInizio;
 	private Date dataFine;
-	private int diff;
+	private int differenza;
+	private int anno;
 	
-	public Rilevamento(int utenti, Date dataInizio, Date dataFine, int diff) {
+	public Rilevamento(int utenti, Date dataInizio, Date dataFine, int differenza) {
 		super();
 		this.utenti = utenti;
 		this.dataInizio = dataInizio;
 		this.dataFine = dataFine;
-		this.diff=diff;
+		this.differenza=differenza;
+		this.anno = this.dataInizio.getYear();
 	}
 
 	public int getUtenti() {
@@ -41,17 +43,26 @@ public class Rilevamento {
 	}
 	
 
-	public int getDiff() {
-		return diff;
+	public int getDifferenza() {
+		return differenza;
 	}
 
-	public void setDiff(int diff) {
-		this.diff = diff;
+	public void setDifferenza(int diff) {
+		this.differenza = diff;
+	}
+	
+
+	public int getAnno() {
+		return anno;
+	}
+
+	public void setAnno(int anno) {
+		this.anno = anno;
 	}
 
 	@Override
 	public String toString() {
-		return Integer.toString(dataInizio.toLocalDate().getYear())+" "+dataInizio.toLocalDate().toString()+" "+dataFine.toLocalDate().toString()+ " "+diff+" "+utenti;
+		return Integer.toString(dataInizio.toLocalDate().getYear())+" "+dataInizio.toLocalDate().toString()+" "+dataFine.toLocalDate().toString()+ " "+differenza+" "+utenti;
 	}
 	
 	

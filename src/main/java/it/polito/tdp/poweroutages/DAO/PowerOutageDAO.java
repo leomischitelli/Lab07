@@ -78,7 +78,7 @@ public class PowerOutageDAO {
 	public List<Rilevamento> getRilevamentiNerc(Nerc nerc) {
 		String sql ="SELECT customers_affected, date_event_began, date_event_finished, HOUR(TIMEDIFF(date_event_began, date_event_finished)) AS diff "
 				+ "FROM poweroutages "
-				+ "WHERE nerc_id=?";
+				+ "WHERE nerc_id=? ORDER BY date_event_began ";
 		List<Rilevamento> rilevamenti = new ArrayList<Rilevamento>();
 		Connection conn = ConnectDB.getConnection();
 		try {
